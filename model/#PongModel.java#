@@ -16,7 +16,7 @@ public interface PongModel {
      * last compute step -- use this in your time integration to have
      * the items move at the same speed, regardless of the framerate.
      */
-    public void compute(Set<Input> input, long delta_t);
+  public void compute(Set<Input> input, long delta_t);
 
     /**
      * getters that take a BarKey LEFT or RIGHT
