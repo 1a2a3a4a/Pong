@@ -20,7 +20,7 @@ public class MyPongModel implements PongModel {
 	
 	private String message;
 	
-	
+	public static int speed = 5;
 	
 	public MyPongModel(String leftPlayer, String rightPlayer){
 	this.leftPlayer = leftPlayer;
@@ -32,8 +32,65 @@ public class MyPongModel implements PongModel {
 	
 	@Override
 	public void compute(Set<Input> input, long delta_t) {
-		// TODO Auto-generated method stub
-
+	
+	for(Input i : input){
+		switch(i.key){
+		case LEFT:
+			switch(i.dir){
+			case UP:
+			this.barPosLeft  = barPosLeft - 5;	
+			break;
+			case DOWN:
+			this.barPosLeft  = barPosLeft + 5;
+			break;
+			}
+			break;
+		case RIGHT:
+			switch(i.dir){
+			case UP:
+			this.barPosRight  = barPosRight - 5;
+			break;
+			case DOWN:
+			this.barPosRight  = barPosRight + 5;
+			break;
+			}
+			break;
+		}
+	}
+		
+		
+		
+	/* bollens förflyttelse  vvvvv*/
+	if(getBallPos().getX() >= 1170){
+		if(speed > 20){
+		speed = -1 * speed;
+		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
+	}
+		speed = -1 * (speed + 3);
+		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
+    }
+	if(getBallPos().getX() <= 30){
+		if(speed < -20){
+			speed = -1 * speed ;
+			ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
+		}
+		speed = -1 * (speed - 3) ;
+		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
+	}
+		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
+	/* bollen förflyttelse ^^^^^^ */
+		
+		
+	}
+	public Bool hit(BarKey k){
+	switch(k){
+	case LEFT:
+		if == 
+		return true;
+	case RIGHT: 
+		return true;
+	
+	}
 	}
 
 	@Override
