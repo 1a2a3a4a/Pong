@@ -33,7 +33,9 @@ public class MyPongModel implements PongModel {
 	@Override
 	public void compute(Set<Input> input, long delta_t) {
 	
-	for(Input i : input){
+	/* barens förflyttelse vvvvvvvvv */
+	
+		for(Input i : input){
 		switch(i.key){
 		case LEFT:
 			switch(i.dir){
@@ -67,13 +69,17 @@ public class MyPongModel implements PongModel {
 			break;
 			}
 			break;
-		}
+      	}
 	}
-		
+	/* barens förflyttelse ^^^^^^^^^*/
 		
 		
 	/* bollens förflyttelse  vvvvv*/
-	if(getBallPos().getX() >= 1170){
+		
+	if(getBallPos().getX() >= 1170
+			&& getBallPos().getY() <= barPosRight + (barHeightRight / 2) + 10 
+			&& getBallPos().getY() >= barPosRight - (barHeightRight / 2) - 10){
+				
 		if(speed > 20){
 		speed = -1 * speed;
 		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
@@ -81,7 +87,10 @@ public class MyPongModel implements PongModel {
 		speed = -1 * (speed + 3);
 		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
     }
-	if(getBallPos().getX() <= 30){
+	if(getBallPos().getX() <= 30 
+			&& getBallPos().getY() <= barPosLeft + (barHeightLeft / 2) + 10 
+			&& getBallPos().getY() >= barPosLeft - (barHeightLeft / 2) - 10){
+		
 		if(speed < -20){
 			speed = -1 * speed ;
 			ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
@@ -90,10 +99,13 @@ public class MyPongModel implements PongModel {
 		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
 	}
 		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
-	/* bollen förflyttelse ^^^^^^ */
-		
+
+		/* bollen förflyttelse ^^^^^^ */
+    
+	
 		
 	}
+	
 	/*
 	public Bool hit(BarKey k){
 	switch(k){
@@ -156,9 +168,6 @@ public class MyPongModel implements PongModel {
 		}
 	}
 
-	public void addscore(){
-		
-	}
 	
 	@Override
 	public Dimension getFieldSize() {
