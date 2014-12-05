@@ -38,20 +38,32 @@ public class MyPongModel implements PongModel {
 		case LEFT:
 			switch(i.dir){
 			case UP:
-			this.barPosLeft  = barPosLeft - 5;	
+			if(this.barPosLeft >= (barHeightLeft / 2)){
+			this.barPosLeft  = barPosLeft - 5;
+			break;
+			}
 			break;
 			case DOWN:
+			if(barPosLeft <= field.getHeight() - (barHeightLeft / 2)){	
 			this.barPosLeft  = barPosLeft + 5;
+			break;
+			}
 			break;
 			}
 			break;
 		case RIGHT:
 			switch(i.dir){
 			case UP:
+			if(this.barPosRight >= (barHeightRight / 2)){
 			this.barPosRight  = barPosRight - 5;
 			break;
+			}
+			break;
 			case DOWN:
+			if(this.barPosRight <= field.getHeight() - (barHeightRight / 2)){
 			this.barPosRight  = barPosRight + 5;
+			break;
+			}
 			break;
 			}
 			break;
@@ -82,16 +94,19 @@ public class MyPongModel implements PongModel {
 		
 		
 	}
+	/*
 	public Bool hit(BarKey k){
 	switch(k){
 	case LEFT:
 		if == 
 		return true;
-	case RIGHT: 
+	case RIGHT: r
 		return true;
 	
 	}
+	
 	}
+    */
 
 	@Override
 	public int getBarPos(BarKey k) {
@@ -141,6 +156,10 @@ public class MyPongModel implements PongModel {
 		}
 	}
 
+	public void addscore(){
+		
+	}
+	
 	@Override
 	public Dimension getFieldSize() {
 	return this.field.getSize();	
