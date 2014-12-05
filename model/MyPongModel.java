@@ -18,7 +18,7 @@ public class MyPongModel implements PongModel {
 	private String scoreLeft = "0";
 	private String scoreRight = "0";
 	
-	private String message;
+	private String message = "Pong";
 	
 	public static int speed = 5;
 	
@@ -84,7 +84,7 @@ public class MyPongModel implements PongModel {
 		speed = -1 * speed;
 		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
 	}
-		speed = -1 * (speed + 3);
+		speed = -1 * (speed + 5);
 		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
     }
 	if(getBallPos().getX() <= 30 
@@ -95,16 +95,54 @@ public class MyPongModel implements PongModel {
 			speed = -1 * speed ;
 			ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
 		}
-		speed = -1 * (speed - 3) ;
+		speed = -1 * (speed - 5) ;
 		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
+	}   
+	if(getBallPos().getX() > 1200){
+		int sl = Integer.parseInt(this.scoreLeft);
+		sl++;
+		this.scoreLeft = "";
+		scoreLeft = sl + "";
+		if(sl == 10){
+			scoreLeft = "0";
+			scoreRight = "0";
+			this.message = "PLAYER LEFT WINS!";
+			try {
+			    Thread.sleep(5000);                 //1000 milliseconds is one second.
+			} catch(InterruptedException ex) {
+			    Thread.currentThread().interrupt();
+			}
+				
+		}
+		this.message = "Pong";
+		ballPos = new Point(600, 300);
+	    speed = -5; 	
 	}
+
+	if (getBallPos().getX() < 0){
+		int sr = Integer.parseInt(this.scoreRight);
+		sr = sr + 5;
+		this.scoreRight = "";
+		scoreRight = sr + "";
+		if(sr == 10){
+			scoreLeft = "0";
+			scoreRight = "0";
+			this.message = "PLAYER RIGHT WINS!";
+		}
+	
+			
+		this.message = "Pong";
+	    ballPos = new Point(600, 300);
+	    speed = 5; 
+	}
+
 		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
 
-		/* bollen förflyttelse ^^^^^^ */
-    
+				
 	
-		
 	}
+	
+	/* bollen förflyttelse ^^^^^^ */
 	
 	/*
 	public Bool hit(BarKey k){
@@ -153,7 +191,7 @@ public class MyPongModel implements PongModel {
 	@Override
 	public String getMessage() {
 		
-		return "Pong";
+		return message;
 	}
 
 	@Override
