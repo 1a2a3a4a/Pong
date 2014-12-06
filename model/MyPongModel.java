@@ -20,7 +20,9 @@ public class MyPongModel implements PongModel {
 	
 	private String message = "Pong";
 	
-	public static int speed = 5;
+	public static int xspeed = 5;
+	public static int yspeed = 0;
+	public static final int barSpeed = 8; 
 	
 	public MyPongModel(String leftPlayer, String rightPlayer){
 	this.leftPlayer = leftPlayer;
@@ -41,13 +43,13 @@ public class MyPongModel implements PongModel {
 			switch(i.dir){
 			case UP:
 			if(this.barPosLeft >= (barHeightLeft / 2)){
-			this.barPosLeft  = barPosLeft - 5;
+			this.barPosLeft  = barPosLeft - barSpeed;
 			break;
 			}
 			break;
 			case DOWN:
 			if(barPosLeft <= field.getHeight() - (barHeightLeft / 2)){	
-			this.barPosLeft  = barPosLeft + 5;
+			this.barPosLeft  = barPosLeft + barSpeed;
 			break;
 			}
 			break;
@@ -57,13 +59,13 @@ public class MyPongModel implements PongModel {
 			switch(i.dir){
 			case UP:
 			if(this.barPosRight >= (barHeightRight / 2)){
-			this.barPosRight  = barPosRight - 5;
+			this.barPosRight  = barPosRight - barSpeed;
 			break;
 			}
 			break;
 			case DOWN:
 			if(this.barPosRight <= field.getHeight() - (barHeightRight / 2)){
-			this.barPosRight  = barPosRight + 5;
+			this.barPosRight  = barPosRight + barSpeed;
 			break;
 			}
 			break;
@@ -76,27 +78,71 @@ public class MyPongModel implements PongModel {
 		
 	/* bollens förflyttelse  vvvvv*/
 		
+		
 	if(getBallPos().getX() >= 1170
 			&& getBallPos().getY() <= barPosRight + (barHeightRight / 2) + 10 
 			&& getBallPos().getY() >= barPosRight - (barHeightRight / 2) - 10){
-				
-		if(speed > 20){
-		speed = -1 * speed;
-		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
+	
+		if((barPosRight - (barHeightRight/2)) > getBallPos().getY() - 9  && (barPosRight - (barHeightRight/2) < getBallPos().getY() + 10)){
+			if(yspeed > 0 ){
+				yspeed = yspeed * -1;
+			}
+			
+			if(yspeed == 0){
+			 yspeed = -5;	
+			}
+		}
+		
+		if((barPosRight + (barHeightRight/2)) > getBallPos().getY() -10 && (barPosRight + (barHeightRight/2) < getBallPos().getY() + 9)){
+			if(yspeed < 0 ){
+				yspeed = yspeed * -1;
+			}
+			
+			if(yspeed == 0){
+			 yspeed = 5;	
+			}
+		}
+		
+		
+		
+			
+		if(xspeed > 20){
+		xspeed = -1 * xspeed;
+		ballPos.setLocation(getBallPos().getX() + xspeed , getBallPos().getY() + yspeed);
 	}
-		speed = -1 * (speed + 5);
-		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
+		xspeed = -1 * (xspeed + 5);
+		ballPos.setLocation(getBallPos().getX() + xspeed , getBallPos().getY() + yspeed );
     }
-	if(getBallPos().getX() <= 30 
+	if(getBallPos().getX() <= 30  
 			&& getBallPos().getY() <= barPosLeft + (barHeightLeft / 2) + 10 
 			&& getBallPos().getY() >= barPosLeft - (barHeightLeft / 2) - 10){
 		
-		if(speed < -20){
-			speed = -1 * speed ;
-			ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
+		if((barPosLeft - (barHeightLeft/2)) > getBallPos().getY() -9 && (barPosLeft - (barHeightLeft/2) < getBallPos().getY() + 10)){
+			if(yspeed > 0 ){
+				yspeed = yspeed * -1;
+			}
+			
+			if(yspeed == 0){
+			 yspeed = -5;	
+			}
 		}
-		speed = -1 * (speed - 5) ;
-		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
+		if((barPosLeft + (barHeightLeft/2)) > getBallPos().getY() -10 && (barPosLeft + (barHeightLeft/2) < getBallPos().getY() + 9) ){
+			if(yspeed < 0 ){
+				yspeed = yspeed * -1;
+			}
+			
+			if(yspeed == 0){
+			 yspeed = 5;	
+			}
+		}
+		
+		
+		if(xspeed < -20){
+			xspeed = -1 * xspeed ;
+			ballPos.setLocation(getBallPos().getX() + xspeed , getBallPos().getY() + yspeed);
+		}
+		xspeed = -1 * (xspeed - 5) ;
+		ballPos.setLocation(getBallPos().getX() + xspeed , getBallPos().getY() + yspeed);
 	}   
 	if(getBallPos().getX() > 1200){
 		int sl = Integer.parseInt(this.scoreLeft);
@@ -106,17 +152,12 @@ public class MyPongModel implements PongModel {
 		if(sl == 10){
 			scoreLeft = "0";
 			scoreRight = "0";
-			this.message = "PLAYER LEFT WINS!";
-			try {
-			    Thread.sleep(5000);                 //1000 milliseconds is one second.
-			} catch(InterruptedException ex) {
-			    Thread.currentThread().interrupt();
-			}
-				
+			this.message = "PLAYER LEFT WINS!";				
 		}
 		this.message = "Pong";
 		ballPos = new Point(600, 300);
-	    speed = -5; 	
+	    xspeed = -5;
+	    yspeed = 0;
 	}
 
 	if (getBallPos().getX() < 0){
@@ -133,10 +174,15 @@ public class MyPongModel implements PongModel {
 			
 		this.message = "Pong";
 	    ballPos = new Point(600, 300);
-	    speed = 5; 
+	    xspeed = 5; 
+	    yspeed = 0;
 	}
 
-		ballPos.setLocation(getBallPos().getX() + speed , getBallPos().getY());
+	if(getBallPos().getY() <= 10 || getBallPos().getY() >= 590){
+		yspeed = -1 * yspeed;
+	}
+	
+		ballPos.setLocation(getBallPos().getX() + xspeed , getBallPos().getY() + yspeed);
 
 				
 	
@@ -144,20 +190,13 @@ public class MyPongModel implements PongModel {
 	
 	/* bollen förflyttelse ^^^^^^ */
 	
-	/*
-	public Bool hit(BarKey k){
-	switch(k){
-	case LEFT:
-		if == 
-		return true;
-	case RIGHT: r
-		return true;
-	
-	}
-	
-	}
-    */
 
+
+	/**
+	 * Returns the position of a BarKey.
+	 * @param k a BarKey.
+	 * @return The position of k.
+	 */
 	@Override
 	public int getBarPos(BarKey k) {
 		switch(k){
@@ -170,7 +209,11 @@ public class MyPongModel implements PongModel {
 		}
 		
 	}
-
+	/**
+	 * Returns the height of a Barkey.
+	 * @param k a  BarKey.
+	 * @return The height of k.
+	 */
 	@Override
 	public int getBarHeight(BarKey k) {
 		switch(k){
@@ -182,18 +225,29 @@ public class MyPongModel implements PongModel {
 			return 0;
 		}
 	}
-
+	/**
+	 * Returns the position of the ball.
+	 * @return the position of Ball. 
+	 */
 	@Override
 	public Point getBallPos() {
 	return this.ballPos.getLocation();
 	}
-
+	/**
+	 * Return the message.
+	 * @return message	
+	 */
 	@Override
 	public String getMessage() {
 		
 		return message;
 	}
 
+	/**
+	 * Returns the score of a BarKey.
+	 * @param k to get the score from.
+	 * @return the score of k.
+	 */
 	@Override
 	public String getScore(BarKey k) {
 		switch(k){
@@ -206,7 +260,10 @@ public class MyPongModel implements PongModel {
 		}
 	}
 
-	
+	/**
+	 * Returns the field size.
+	 * @return size of field.
+	 */
 	@Override
 	public Dimension getFieldSize() {
 	return this.field.getSize();	
