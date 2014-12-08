@@ -14,6 +14,7 @@ public class MyPongModel implements PongModel {
 	private int barPosRight = 300;
 	private int barHeightLeft = 200;
 	private int barHeightRight = 200;
+	public static int initBarHeight = 200;
 	
 	private String scoreLeft = "0";
 	private String scoreRight = "0";
@@ -24,6 +25,8 @@ public class MyPongModel implements PongModel {
 	public static int yspeed = 0;
 	public static final int barSpeed = 8; 
 	
+	public boolean newGame = false;
+	
 	public MyPongModel(String leftPlayer, String rightPlayer){
 	this.leftPlayer = leftPlayer;
 	this.rightPlayer = rightPlayer;
@@ -31,10 +34,27 @@ public class MyPongModel implements PongModel {
 	this.ballPos = new Point(600, 300);
 	}
 	
+	/* för testning */
+	public MyPongModel(){
+		this.leftPlayer = leftPlayer;
+		this.rightPlayer = rightPlayer;
+		this.field = new Dimension(1200, 600);
+		this.ballPos = new Point(600, 300);
+		}
 	
-	@Override
+		
+	
 	public void compute(Set<Input> input, long delta_t) {
 	
+		if(newGame == true){
+		try {
+		    Thread.sleep(5000);
+		} catch (InterruptedException e) {
+		    e.printStackTrace();
+		}
+		}
+		newGame = false;
+		this.message = "Pong";
 	/* barens förflyttelse vvvvvvvvv */
 	
 		for(Input i : input){
@@ -146,15 +166,38 @@ public class MyPongModel implements PongModel {
 	}   
 	if(getBallPos().getX() > 1200){
 		int sl = Integer.parseInt(this.scoreLeft);
+		int sr = Integer.parseInt(this.scoreRight);
 		sl++;
 		this.scoreLeft = "";
 		scoreLeft = sl + "";
+		
+		if  (sl - sr < 3) {
+			barHeightRight = initBarHeight;
+		    barHeightLeft = initBarHeight;
+		}
+		if ((sl - sr >=3) && (sl -sr <5)) {
+			barHeightRight = initBarHeight + 20;
+		}
+		if ((sl - sr >= 5) && (sl - sr <7)){
+			barHeightRight = initBarHeight + 50;
+			barHeightLeft =  initBarHeight;
+		}
+	    if (sl - sr == 7) { 
+	    	barHeightLeft = 100;
+	    }
+		
 		if(sl == 10){
 			scoreLeft = "0";
 			scoreRight = "0";
-			this.message = "PLAYER LEFT WINS!";				
+			this.message = "PLAYER LEFT WINS!"; //gör en paus här
+			barHeightLeft = initBarHeight;
+			barHeightRight = initBarHeight;
+			barPosLeft = 300;
+			barPosRight = 300;
+			newGame = true;
 		}
-		this.message = "Pong";
+		
+		
 		ballPos = new Point(600, 300);
 	    xspeed = -5;
 	    yspeed = 0;
@@ -162,22 +205,45 @@ public class MyPongModel implements PongModel {
 
 	if (getBallPos().getX() < 0){
 		int sr = Integer.parseInt(this.scoreRight);
-		sr = sr + 5;
+		int sl = Integer.parseInt(this.scoreLeft);
+		sr = sr + 1;
 		this.scoreRight = "";
 		scoreRight = sr + "";
+		if  (sr - sl < 3) {
+			barHeightLeft = initBarHeight;
+		    barHeightRight = initBarHeight;
+		}
+		if ((sr - sl >=3) && (sr -sl <5)) {
+			barHeightLeft = initBarHeight + 20;
+		}
+		if ((sr - sl >= 5) && (sr - sl <7)){
+			barHeightLeft = initBarHeight + 50;
+			barHeightRight =  initBarHeight;
+		}
+	    if (sr - sl == 7) { 
+	    	barHeightRight = 100;
+	    }
+		
 		if(sr == 10){
 			scoreLeft = "0";
 			scoreRight = "0";
-			this.message = "PLAYER RIGHT WINS!";
+			this.message = "PLAYER RIGHT WINS!"; //gör en paus här
+			barHeightLeft = initBarHeight;
+			barHeightRight = initBarHeight;
+			barPosLeft = 300;
+			barPosRight = 300;
+			newGame = true;
 		}
-	
+		
 			
-		this.message = "Pong";
+		
 	    ballPos = new Point(600, 300);
 	    xspeed = 5; 
 	    yspeed = 0;
 	}
 
+
+	
 	if(getBallPos().getY() <= 10 || getBallPos().getY() >= 590){
 		yspeed = -1 * yspeed;
 	}
