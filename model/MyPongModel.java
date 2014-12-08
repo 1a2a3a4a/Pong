@@ -334,4 +334,9 @@ public class MyPongModel implements PongModel {
 	public Dimension getFieldSize() {
 	return this.field.getSize();	
 	}
+	
+	/* FÖR TESTNING */
+	public int getXSpeed(){
+		return this.xspeed;
+	}
 }
