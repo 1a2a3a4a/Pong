@@ -142,7 +142,7 @@ public class PongView {
     }
 
     public void update() {
-        SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(		new Runnable() {
                 public void run() {
                     bars.get(BarKey.LEFT).update(scaleYPos(model.getBarPos(BarKey.LEFT)), scaleYPos(model.getBarHeight(BarKey.LEFT)));
                     bars.get(BarKey.RIGHT).update(scaleYPos(model.getBarPos(BarKey.RIGHT)), scaleYPos(model.getBarHeight(BarKey.RIGHT)));

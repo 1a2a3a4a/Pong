@@ -9,4 +9,5 @@ public class Input {
         this.key = key;
         this.dir = dir;
     }
+   
 }
