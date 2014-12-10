@@ -333,6 +333,15 @@ public class MyPongModel implements PongModel {
     @Override
     public Dimension getFieldSize() {
 	return this.field.getSize();	
+<<<<<<< HEAD
+	}
+	
+	/* FÖR TESTNING */
+	public int getXSpeed(){
+		return this.xspeed;
+	}
+}
+=======
     }
 
 
@@ -341,3 +350,4 @@ public class MyPongModel implements PongModel {
 	return this.xspeed;
     }
 }
+>>>>>>> 2a836f865470430d4ccf906399356cc82b50d980
