@@ -55,11 +55,11 @@ public class MyPongModelTest {
 		assertEquals(test.getBallPos(),testPoint);
 	}
 	@Test
-	public void testcompute(){
+	public void testcompute1(){
 		Set<Input> testHashSet = new HashSet<Input>();
 		Set<Input> testInput = new HashSet<Input>();
 		MyPongModel tester = new MyPongModel("lefPlayer", "rightPlayer");
-		
+		Input inputtester = new Input(BarKey.RIGHT, Dir.DOWN);
 		tester.compute(testInput, 1000/30);
 		assertEquals(tester.getBallPos(), new Point(605,300));
 		
@@ -84,11 +84,36 @@ public class MyPongModelTest {
 		assertTrue(tester.getXSpeed() == 15);
 		assertTrue(tester.getBallPos().getX() == 60);
 		
-		
-		for(int k = 0; k < 74; k++){
+		testInput.add(inputtester);
+		for(int k = 0; k < 78; k++){
 			tester.compute(testInput, 1000/30);
 		}
 		
+		assertTrue(tester.getXSpeed() == -5);
+		assertEquals(tester.getScore(BarKey.LEFT),"1");
+		assertTrue(tester.getBallPos().getX() == 595);
+		assertTrue(tester.getBarPos(BarKey.RIGHT) == 508);	
+	}
+	@Test	
+	public void testcompute2(){
+		Set<Input> testHashSet = new HashSet<Input>();
+		Set<Input> testInput = new HashSet<Input>();
+		MyPongModel tester = new MyPongModel("lefPlayer", "rightPlayer");
+		Input inputtester = new Input(BarKey.RIGHT, Dir.UP);
+		
+		for(int i = 0; i < 102; i++){
+		tester.compute(testInput, 1000/30);	
+		}
+		
+		testInput.add(inputtester);
+		
+		for(int j = 0; j < 12; j++){
+			tester.compute(testInput, 1000/30);
+		}
+		assertTrue(tester.getBallPos().getX() == tester.getBarPos(BarKey.RIGHT) + 100);
 		
 	}
+	
+	
+	
 }

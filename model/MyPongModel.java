@@ -10,7 +10,7 @@ public class MyPongModel implements PongModel {
     private Dimension field;
     private Point ballPos;
 	
-    private int barPosLeft = 300;
+    private int barPosLeft = 300	;
     private int barPosRight = 300;
     private int barHeightLeft = 200;
     private int barHeightRight = 200;
@@ -244,7 +244,7 @@ public class MyPongModel implements PongModel {
 
 
 	
-	if(getBallPos().getY() <= 10 || getBallPos().getY() >= 590){
+	if(getBallPos().getY() <= 21 || getBallPos().getY() >= 579){
 	    yspeed = -1 * yspeed;
 	}
 	
@@ -333,21 +333,9 @@ public class MyPongModel implements PongModel {
     @Override
     public Dimension getFieldSize() {
 	return this.field.getSize();	
-<<<<<<< HEAD
-	}
-	
-	/* FÖR TESTNING */
-	public int getXSpeed(){
-		return this.xspeed;
-	}
-}
-=======
     }
-
-
     // For testing 
     public int getXSpeed(){
 	return this.xspeed;
     }
 }
->>>>>>> 2a836f865470430d4ccf906399356cc82b50d980
