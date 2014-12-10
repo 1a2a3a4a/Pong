@@ -1,3 +1,5 @@
+/* last edit 8/12-14 20:08*/
+
 package model;
 
 import java.awt.Dimension;
@@ -27,13 +29,19 @@ public class MyPongModel implements PongModel {
 	
     public boolean newGame = false;
 	
-    public MyPongModel(String leftPlayer, String rightPlayer){
+    /** Creates the gamefield
+     *  @param leftplayer controls the left bar
+     * @param  rightplayer controls the right bar
+     *
+     *
+     */
+         public MyPongModel(String leftPlayer, String rightPlayer){
 	this.leftPlayer  = leftPlayer;
 	this.rightPlayer = rightPlayer;
 	this.field       = new Dimension(1200, 600);
 	this.ballPos     = new Point(600, 300);
     }
-	
+    /** Creates the gamefield*/	
     /* för testning */
     public MyPongModel(){
 	this.leftPlayer  = leftPlayer;
@@ -43,7 +51,10 @@ public class MyPongModel implements PongModel {
     }
 	
 		
-	
+    /**All the physics in the game , controlls the bars , score and the ball 
+     * @param input from the keyboard
+     * @param delta_t I DONT KNOW !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     */	
     public void compute(Set<Input> input, long delta_t) {
 	
 	if(newGame == true){
@@ -57,12 +68,12 @@ public class MyPongModel implements PongModel {
 	this.message = "Pong";
 	/* barens förflyttelse vvvvvvvvv */
 	
-	for(Input i : input){
+	for(Input i : input){  // move the bars depending on the keyboard input
 	    switch(i.key){
 	    case LEFT:
 		switch(i.dir){
 		case UP:
-		    if(barPosLeft  >= (barHeightLeft / 2)){
+		    if(barPosLeft  >= (barHeightLeft / 2)){  
 			barPosLeft  = barPosLeft - barSpeed;
 			break;
 		    }
@@ -99,79 +110,79 @@ public class MyPongModel implements PongModel {
 	/* bollens förflyttelse  vvvvv*/
 		
 		
-	if(getBallPos().getX()    >= 1170
-	   && getBallPos().getY() <= barPosRight + (barHeightRight / 2) + 10 
-	   && getBallPos().getY() >= barPosRight - (barHeightRight / 2) - 10){
+	if(getBallPos().getX()    >= 1170   //if the ball hits the right bar
+	   && getBallPos().getY() <= barPosRight + (barHeightRight / 2) + 10
+	   && getBallPos().getY() >= barPosRight - (barHeightRight / 2) - 10){  
 	
-	    if((barPosRight - (barHeightRight/2)) > getBallPos().getY() - 9  && (barPosRight - (barHeightRight/2) < getBallPos().getY() + 10)){
+	    if((barPosRight - (barHeightRight/2)) > getBallPos().getY() - 9  && (barPosRight - (barHeightRight/2) < getBallPos().getY() + 10)){  // if not the whole ball hits the top of the right bar
 		if(yspeed > 0 ){
 		    yspeed = yspeed * -1;
 		}
 			
 		if(yspeed == 0){
-		    yspeed = -5;	
+		    yspeed = -5;	// the ball will not go straight anymore
 		}
 	    }
 		
-	    if((barPosRight + (barHeightRight/2)) > getBallPos().getY() -10 && (barPosRight + (barHeightRight/2) < getBallPos().getY() + 9)){
+	    if((barPosRight + (barHeightRight/2)) > getBallPos().getY() -10 && (barPosRight + (barHeightRight/2) < getBallPos().getY() + 9)){  // if no the whole ball hits the bottom of the right bar 
 		if(yspeed < 0 ){
 		    yspeed = yspeed * -1;
 		}
 			
 		if(yspeed == 0){
-		    yspeed = 5;	
+		    yspeed = 5;	// the ball will not go straight anymore
 		}
 	    }
 		
 		
 		
 			
-	    if(xspeed  > 20){
+	    if(xspeed  > 20){  // dont increse the speed if its to high, just change the direction of the ball
 		xspeed = -1 * xspeed;
 		ballPos.setLocation(getBallPos().getX() + xspeed, getBallPos().getY() + yspeed);
 	    }
-	    xspeed = -1 * (xspeed + 5);
+	    xspeed = -1 * (xspeed + 5); // increse the speed and change the direction
 	    ballPos.setLocation(getBallPos().getX() + xspeed, getBallPos().getY() + yspeed );
 	}
-	if(getBallPos().getX() <= 30  
+	if(getBallPos().getX() <= 30  //if the ball hits the left bar
 	   && getBallPos().getY() <= barPosLeft + (barHeightLeft / 2) + 10 
 	   && getBallPos().getY() >= barPosLeft - (barHeightLeft / 2) - 10){
 		
-	    if((barPosLeft - (barHeightLeft/2)) > getBallPos().getY() -9 && (barPosLeft - (barHeightLeft/2) < getBallPos().getY() + 10)){
+	    if((barPosLeft - (barHeightLeft/2)) > getBallPos().getY() -9 && (barPosLeft - (barHeightLeft/2) < getBallPos().getY() + 10)){ // if not the whole ball hits the top of the left bar
 		if(yspeed > 0 ){
 		    yspeed = yspeed * -1;
 		}
 			
 		if(yspeed == 0){
-		    yspeed = -5;	
+		    yspeed = -5; // the ball will not go straight anymore	
 		}
 	    }
-	    if((barPosLeft + (barHeightLeft/2)) > getBallPos().getY() -10 && (barPosLeft + (barHeightLeft/2) < getBallPos().getY() + 9) ){
+	    if((barPosLeft + (barHeightLeft/2)) > getBallPos().getY() -10 && (barPosLeft + (barHeightLeft/2) < getBallPos().getY() + 9) ){// if no the whole ball hits the bottom of the left bar 
 		if(yspeed < 0 ){
 		    yspeed = yspeed * -1;
 		}
 			
 		if(yspeed == 0){
-		    yspeed = 5;	
+		    yspeed = 5;	 // the ball will not go straight anymore
 		}
 	    }
 		
 		
-	    if(xspeed < -20){
+	    if(xspeed < -20){   // dont increse the speed if its to high, just change the direction of the ball
 		xspeed = -1 * xspeed ;
 		ballPos.setLocation(getBallPos().getX() + xspeed, getBallPos().getY() + yspeed);
 	    }
-	    xspeed = -1 * (xspeed - 5) ;
+	    xspeed = -1 * (xspeed - 5) ;// increse the speed of the ball and change the direction
 	    ballPos.setLocation(getBallPos().getX() + xspeed, getBallPos().getY() + yspeed);
 	}   
-	if(getBallPos().getX() > 1200){
+	if(getBallPos().getX() > 1200){  // if the left player scores increase he score by one 
 	    int sl = Integer.parseInt(this.scoreLeft);
 	    int sr = Integer.parseInt(this.scoreRight);
 	    sl++;
 	    this.scoreLeft = "";
 	    scoreLeft = sl + "";
 		
-	    if  (sl - sr < 3) {
+	    if  (sl - sr < 3) {  // give the right player handicap if the left player have more goals scored
 		barHeightRight = initBarHeight;
 		barHeightLeft  = initBarHeight;
 	    }
@@ -186,7 +197,7 @@ public class MyPongModel implements PongModel {
 	    	barHeightLeft = 100;
 	    }
 		
-	    if(sl == 10){
+	    if(sl == 10){  
 		scoreLeft  = "0";
 		scoreRight = "0";
 		this.message = "PLAYER LEFT WINS!"; //gör en paus här
@@ -198,18 +209,18 @@ public class MyPongModel implements PongModel {
 	    }
 		
 		
-	    ballPos = new Point(600, 300);
+	    ballPos = new Point(600, 300); // reset the ball with winner serve
 	    xspeed  = -5;
 	    yspeed  = 0;
 	}
 
-	if (getBallPos().getX() < 0){
+	if (getBallPos().getX() < 0){   // if the left player scores increase he score by on
 	    int sr = Integer.parseInt(this.scoreRight);
 	    int sl = Integer.parseInt(this.scoreLeft);
 	    sr = sr + 1;
 	    this.scoreRight = "";
 	    scoreRight = sr + "";
-	    if  (sr - sl < 3) {
+	    if  (sr - sl < 3) {   // give the left player handicap if the right player have more goals scored
 		barHeightLeft  = initBarHeight;
 		barHeightRight = initBarHeight;
 	    }
@@ -224,7 +235,7 @@ public class MyPongModel implements PongModel {
 	    	barHeightRight = 100;
 	    }
 		
-	    if(sr == 10){
+	    if(sr == 10){  // if the right player has made 10 goals the right payer wins
 		scoreLeft  = "0";
 		scoreRight = "0";
 		this.message   = "PLAYER RIGHT WINS!"; //gör en paus här
@@ -237,14 +248,14 @@ public class MyPongModel implements PongModel {
 		
 			
 		
-	    ballPos = new Point(600, 300);
+	    ballPos = new Point(600, 300);  // reset the ball with winner serve
 	    xspeed = 5; 
 	    yspeed = 0;
 	}
 
 
 	
-	if(getBallPos().getY() <= 10 || getBallPos().getY() >= 590){
+	if(getBallPos().getY() <= 10 || getBallPos().getY() >= 590){   // if the ball hits the top or bottom wall, then bounce 
 	    yspeed = -1 * yspeed;
 	}
 	
@@ -350,4 +361,3 @@ public class MyPongModel implements PongModel {
 	return this.xspeed;
     }
 }
->>>>>>> 2a836f865470430d4ccf906399356cc82b50d980
